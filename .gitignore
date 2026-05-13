@@ -1,0 +1,14 @@
+# Simulation outputs
+*.vcd
+*.out
+
+# Logs
+*.log
+
+# OpenROAD outputs
+results/
+logs/
+reports/
+
+# Temp
+*.swp

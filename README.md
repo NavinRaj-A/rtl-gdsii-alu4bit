@@ -1,63 +1,62 @@
-# RTL to GDSII Implementation of 4-bit ALU
+# 🔷 4-bit ALU | RTL to GDSII using OpenROAD
 
 ## 📌 Overview
+This project demonstrates the complete RTL-to-GDSII flow for a 4-bit Arithmetic Logic Unit (ALU) using open-source VLSI tools.
 
-This project demonstrates the complete RTL-to-GDSII flow of a 4-bit ALU using open-source VLSI tools.
-
-The design is implemented starting from Verilog RTL, verified through simulation, and will be taken through synthesis, placement, routing, and final GDSII generation.
+The design is written in Verilog, verified through simulation, and implemented physically using the OpenROAD flow with Sky130 technology. The final output is a GDSII layout representing the chip design.
 
 ---
 
-## 🚀 Project Flow
+## ⚙️ Tools Used
+- Verilog (RTL Design)
+- Icarus Verilog (iverilog) – Simulation
+- GTKWave – Waveform Viewer
+- OpenROAD-flow-scripts – Physical Design Flow
+- Sky130 PDK – Standard Cell Library
+
+---
+
+## 🔁 Complete Design Flow
 
 1. RTL Design (Verilog)
 2. Functional Simulation
-3. Synthesis
+3. Logic Synthesis (Yosys)
 4. Floorplanning
 5. Placement
 6. Clock Tree Synthesis (CTS)
 7. Routing
-8. Parasitic Extraction
+8. Physical Verification (DRC & Antenna Check)
 9. GDSII Generation
 
 ---
 
-## 🛠 Tools Used
+## 📊 Results
 
-* OpenROAD
-* OpenROAD-flow-scripts (ORFS)
-* Yosys
-* Icarus Verilog
-* GTKWave
+| Parameter            | Value          |
+|---------------------|---------------|
+| Total Cells         | 55            |
+| Area                | 451.68 µm²    |
+| Utilization         | 11%           |
+| DRC Violations      | 0             |
+| Antenna Violations  | 0             |
 
 ---
 
-## 📂 Project Structure
-
-rtl/ → Verilog design
-sim/ → Testbench and waveform
-docs/ → Documentation
-images/ → Screenshots
-config/ → Flow configuration
-
+## 📁 Project Structure
+rtl/ → Verilog design files
+sim/ → Testbench and simulation files
+images/ → Layout screenshots
 ---
 
 ## 🧪 Simulation
 
-The ALU functionality is verified using a testbench.
+![Waveform](images/waveform.png)
 
-(Add waveform screenshot here)
+### Compile
+```bash
+iverilog -o alu_sim rtl/alu_4bit.v sim/tb_alu_4bit.v
+Run Simulation
+vvp alu_sim
+View Waveform
+gtkwave dump.vcd
 
----
-
-## 🧠 Learning Outcomes
-
-* Understood RTL design and verification
-* Learned complete ASIC design flow
-* Analyzed synthesis and routing reports
-
----
-
-## 📌 Status
-
-🟡 In Progress (Currently at Simulation Stage)

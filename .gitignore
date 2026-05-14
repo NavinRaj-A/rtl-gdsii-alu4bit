@@ -1,3 +1,4 @@
+sim/alu_sim
 # Simulation outputs
 *.vcd
 *.out

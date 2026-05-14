@@ -1,62 +1,242 @@
-# 🔷 4-bit ALU | RTL to GDSII using OpenROAD
+# 🚀 RTL to GDSII Flow using OpenROAD – 4-bit ALU
 
 ## 📌 Overview
-This project demonstrates the complete RTL-to-GDSII flow for a 4-bit Arithmetic Logic Unit (ALU) using open-source VLSI tools.
 
-The design is written in Verilog, verified through simulation, and implemented physically using the OpenROAD flow with Sky130 technology. The final output is a GDSII layout representing the chip design.
+This project demonstrates a complete **RTL-to-GDSII physical design flow** for a **4-bit ALU** using open-source VLSI tools.
 
----
+The objective is to understand and implement each stage of the ASIC design flow:
 
-## ⚙️ Tools Used
-- Verilog (RTL Design)
-- Icarus Verilog (iverilog) – Simulation
-- GTKWave – Waveform Viewer
-- OpenROAD-flow-scripts – Physical Design Flow
-- Sky130 PDK – Standard Cell Library
-
----
-
-## 🔁 Complete Design Flow
-
-1. RTL Design (Verilog)
-2. Functional Simulation
-3. Logic Synthesis (Yosys)
-4. Floorplanning
-5. Placement
-6. Clock Tree Synthesis (CTS)
-7. Routing
-8. Physical Verification (DRC & Antenna Check)
-9. GDSII Generation
+* RTL Design
+* Functional Simulation
+* Logic Synthesis
+* Floorplanning
+* Placement
+* Clock Tree Synthesis (CTS)
+* Routing
+* Physical Verification
+* GDSII Generation
 
 ---
 
-## 📊 Results
+## 🧠 Tools Used
 
-| Parameter            | Value          |
-|---------------------|---------------|
-| Total Cells         | 55            |
-| Area                | 451.68 µm²    |
-| Utilization         | 11%           |
-| DRC Violations      | 0             |
-| Antenna Violations  | 0             |
+* **Icarus Verilog (iverilog)** → Simulation
+* **GTKWave** → Waveform viewing
+* **Yosys** → Synthesis
+* **OpenROAD Flow** → Physical Design (RTL → GDSII)
+* **Sky130 PDK** → Technology library
 
 ---
 
 ## 📁 Project Structure
-rtl/ → Verilog design files
-sim/ → Testbench and simulation files
-images/ → Layout screenshots
+
+```
+rtl-gdsii-alu4bit/
+├── rtl/                # RTL design files
+├── sim/                # Testbench & simulation outputs
+├── images/             # Screenshots (waveforms, layout)
+├── README.md
+└── .gitignore
+```
+
 ---
 
-## 🧪 Simulation
+# ⚙️ Step-by-Step Flow
+
+---
+
+## 🔹 Step 1: RTL Design
+
+📄 File: `rtl/alu_4bit.v`
+
+Design of a 4-bit ALU supporting operations like:
+
+* Addition
+* Subtraction
+* AND, OR, XOR
+
+---
+
+## 🔹 Step 2: Simulation
+
+### ▶ Compile
+
+```
+iverilog -o alu_sim rtl/alu_4bit.v sim/tb_alu_4bit.v
+```
+
+👉 Converts Verilog into executable simulation file
+
+### ▶ Run Simulation
+
+```
+vvp alu_sim
+```
+
+👉 Executes testbench and generates waveform file (`dump.vcd`)
+
+### ▶ View Waveform
+
+```
+gtkwave dump.vcd
+```
+
+👉 Opens waveform viewer to verify functionality
+
+---
+
+## 📊 Simulation Result
 
 ![Waveform](images/waveform.png)
 
-### Compile
-```bash
-iverilog -o alu_sim rtl/alu_4bit.v sim/tb_alu_4bit.v
-Run Simulation
-vvp alu_sim
-View Waveform
-gtkwave dump.vcd
+---
 
+## 🔹 Step 3: Synthesis (Yosys via OpenROAD)
+
+```
+make DESIGN_CONFIG=designs/sky130hd/alu_4bit/config.mk synth
+```
+
+👉 Converts RTL → Gate-level netlist using Sky130 standard cells
+
+---
+
+## 📊 Synthesis Report
+
+📄 File:
+
+```
+reports/sky130hd/alu_4bit/base/synth_stat.txt
+```
+
+---
+
+## 🔹 Step 4: Floorplanning
+
+```
+make DESIGN_CONFIG=designs/sky130hd/alu_4bit/config.mk floorplan
+```
+
+👉 Defines chip area, IO placement, and power distribution
+
+---
+
+## 🔹 Step 5: Placement
+
+```
+make DESIGN_CONFIG=designs/sky130hd/alu_4bit/config.mk place
+```
+
+👉 Places standard cells optimally inside core area
+
+---
+
+## 🔹 Step 6: Clock Tree Synthesis (CTS)
+
+```
+make DESIGN_CONFIG=designs/sky130hd/alu_4bit/config.mk cts
+```
+
+👉 Builds clock network to minimize skew and delay
+
+---
+
+## 🔹 Step 7: Routing
+
+```
+make DESIGN_CONFIG=designs/sky130hd/alu_4bit/config.mk route
+```
+
+👉 Connects all components using metal layers
+
+---
+
+## 🔹 Step 8: Final GDSII Generation
+
+```
+make DESIGN_CONFIG=designs/sky130hd/alu_4bit/config.mk final
+```
+
+👉 Generates final chip layout (GDSII)
+
+---
+
+## 🧾 Final Reports
+
+Available in:
+
+```
+reports/sky130hd/alu_4bit/base/
+```
+
+Includes:
+
+* Timing reports
+* DRC reports
+* Congestion analysis
+* IR drop analysis
+
+---
+
+## 📊 Results (Preliminary)
+
+| Parameter          | Value      |
+| ------------------ | ---------- |
+| Total Cells        | 55         |
+| Area               | 451.68 µm² |
+| Utilization        | 11%        |
+| DRC Violations     | 0          |
+| Antenna Violations | 0          |
+
+⚠️ These values will be updated after full analysis.
+
+---
+
+## 📸 Physical Design Outputs
+
+### Placement
+
+![Placement](images/final_placement.png)
+
+### Routing
+
+![Routing](images/final_routing.png)
+
+---
+
+## 🎯 Key Learnings
+
+* Complete ASIC design flow understanding
+* Hands-on with OpenROAD toolchain
+* Reading synthesis and routing reports
+* Debugging physical design issues
+
+---
+
+## 🚀 Future Improvements
+
+* Add pipeline architecture
+* Optimize timing performance
+* Add power analysis
+* Explore larger designs (RISC-V core)
+
+---
+
+## 🛠️ Installation Guide (Coming Soon)
+
+A complete step-by-step installation guide for:
+
+* OpenROAD
+* Sky130 PDK
+* Dependencies
+
+---
+
+## 👨‍💻 Author
+
+**Navin Raj A**
+Electronics Engineer | VLSI Enthusiast
+
+---
+
+## ⭐ If you like this project, give it a star!

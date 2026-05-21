@@ -106,31 +106,31 @@ make DESIGN_CONFIG=designs/sky130hd/alu_4bit/config.mk synth
 - Uses Yosys synthesis engine internally
 - Maps logic into Sky130 standard cells
 - Generates synthesis reports and metrics
-
 ---
 
 # 📊 Synthesis Results
 
-| Parameter | Value |
-|-----------|-------|
+| Metric | Value |
+|---|---|
 | Total Cells | 55 |
 | Chip Area | 451.683 µm² |
-| Sequential Area | 17.73% |
-| Errors | 0 |
-
+| Sequential Area | 80.0768 µm² |
+| Sequential Percentage | 17.73% |
+|Errors| 0 |
 ---
 
 # 🔍 Hardware Mapping Observed
 
 The synthesized ALU consists of:
 
-- Full Adders
-- Half Adders
-- XOR Gates
+- Inverters
 - NAND Gates
 - NOR Gates
+- XOR/XNOR Gates
 - Multiplexers
-- Flip-Flops
+- Half Adders
+- Full Adders
+- D Flip-Flops
 
 This confirms successful arithmetic and logic mapping into Sky130 standard cells.
 
@@ -162,11 +162,41 @@ This confirms successful arithmetic and logic mapping into Sky130 standard cells
 
 ## 🔹 Step 4: Floorplanning
 
-```
+Floorplanning initializes the physical structure of the chip including:
+
+- Die Area
+- Core Area
+- Power Distribution Network (PDN)
+- Standard Cell Rows
+- Routing Resources
+
+## Floorplan Command
+
+```bash
 make DESIGN_CONFIG=designs/sky130hd/alu_4bit/config.mk floorplan
 ```
 
-👉 Defines chip area, IO placement, and power distribution
+## Floorplan GUI
+
+![Floorplan](images/floorplan/floorplan_gui.png)
+
+## Floorplan Timing Summary
+
+| Metric | Value |
+|---|---|
+| TNS | 0.00 |
+| WNS | 0.00 |
+| Worst Slack | INF |
+
+## Power Analysis
+
+| Category | Contribution |
+|---|---|
+| Sequential Power | 53.8% |
+| Combinational Power | 46.2% |
+| Total Power | 35.1 µW |
+
+> Note: Timing paths were unconstrained at this stage because detailed timing constraints were not fully specified.
 
 ---
 

@@ -93,23 +93,68 @@ gtkwave dump.vcd
 
 ## 🔹 Step 3: Synthesis (Yosys via OpenROAD)
 
-```
+# 🔹 RTL Synthesis using OpenROAD Flow
+
+## 📌 Synthesis Command
+
+```bash
 make DESIGN_CONFIG=designs/sky130hd/alu_4bit/config.mk synth
 ```
 
-👉 Converts RTL → Gate-level netlist using Sky130 standard cells
+### 🧠 What this does
+- Converts RTL Verilog into gate-level netlist
+- Uses Yosys synthesis engine internally
+- Maps logic into Sky130 standard cells
+- Generates synthesis reports and metrics
 
 ---
 
-## 📊 Synthesis Report
+# 📊 Synthesis Results
 
-📄 File:
-
-```
-reports/sky130hd/alu_4bit/base/synth_stat.txt
-```
+| Parameter | Value |
+|-----------|-------|
+| Total Cells | 55 |
+| Chip Area | 451.683 µm² |
+| Sequential Area | 17.73% |
+| Errors | 0 |
 
 ---
+
+# 🔍 Hardware Mapping Observed
+
+The synthesized ALU consists of:
+
+- Full Adders
+- Half Adders
+- XOR Gates
+- NAND Gates
+- NOR Gates
+- Multiplexers
+- Flip-Flops
+
+This confirms successful arithmetic and logic mapping into Sky130 standard cells.
+
+---
+
+# 📂 Generated Reports
+
+| Report File | Description |
+|-------------|-------------|
+| synth_stat.txt | Cell count, area, and hardware mapping |
+| synth_check.txt | Verifies synthesis integrity |
+
+---
+
+# 📸 Synthesis Screenshots
+
+## Terminal Output
+![Synthesis Terminal](images/synthesis/synth_terminal.png)
+
+## Synthesis Statistics
+![Synthesis Report](images/synthesis/synth_report.png)
+
+## Synthesis Check
+![Synthesis Check](images/synthesis/synth_check.png)
 
 ## 🔹 Step 4: Floorplanning
 

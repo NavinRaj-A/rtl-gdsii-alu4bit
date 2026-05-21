@@ -156,6 +156,10 @@ This confirms successful arithmetic and logic mapping into Sky130 standard cells
 ## Synthesis Check
 ![Synthesis Check](images/synthesis/synth_check.png)
 
+## Synthesized Gate-Level Schematic
+
+![Synthesis Schematic](images/synthesis/alu_synth.png)
+
 ## 🔹 Step 4: Floorplanning
 
 ```
